@@ -1,7 +1,5 @@
 package com.journaldev.spring.model;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="Order", catalog = "testdb")
@@ -25,6 +25,7 @@ public class Order {
 	
 	private String shipDate;
 	
+	@JsonBackReference
     @ManyToOne(cascade=CascadeType.ALL)  
     @JoinColumn(name="CUSTOMER_ID", nullable=false)
 	private Customer customer;

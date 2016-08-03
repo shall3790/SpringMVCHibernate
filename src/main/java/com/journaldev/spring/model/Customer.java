@@ -6,11 +6,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="Customer", catalog = "testdb")
@@ -19,17 +24,29 @@ public class Customer {
 	@Id
 	@Column(name="CUSTOMER_ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@JsonProperty("CustomerId")
 	private int customerId;
 	
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="customer") 
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL, mappedBy="customer") 
 	private List<Order> orders = new ArrayList<Order>();
 	
+	@JsonProperty("LastName")
 	private String lastName;
+	
+	@JsonProperty("FirstName")
 	private String firstName;
+	
+	@JsonProperty("Address")
 	private String address;
+	
+	@JsonProperty("City")
 	private String city;
+	
+	@JsonProperty("State")
 	private String state;
+	
+	@JsonProperty("Zip")
 	private String zip;
 	
 	public Customer() {
@@ -39,6 +56,8 @@ public class Customer {
 	public int getCustomerId() {
 		return customerId;
 	}
+	
+	
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
